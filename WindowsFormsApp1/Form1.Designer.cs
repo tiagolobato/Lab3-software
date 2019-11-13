@@ -31,8 +31,8 @@
             this.btnEnviarAltura = new System.Windows.Forms.Button();
             this.btnEnviarAngulo = new System.Windows.Forms.Button();
             this.lblAnguloFixo = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxAnguloIn = new System.Windows.Forms.TextBox();
+            this.textBoxAlturaIn = new System.Windows.Forms.TextBox();
             this.lblAlturaFixo = new System.Windows.Forms.Label();
             this.lblAlturaInfoFixo = new System.Windows.Forms.Label();
             this.lblAnguloInfoFixo = new System.Windows.Forms.Label();
@@ -47,22 +47,25 @@
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.pctBoxControle = new System.Windows.Forms.PictureBox();
             this.btnLigarGuindaste = new System.Windows.Forms.Button();
-            this.pctBoxGuindaste = new System.Windows.Forms.PictureBox();
             this.lblBoxGuindaste = new System.Windows.Forms.Label();
             this.lblInfoFixo = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblBoxIma = new System.Windows.Forms.Label();
-            this.pctBoxIma = new System.Windows.Forms.PictureBox();
             this.btnLigarIma = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnResetar = new System.Windows.Forms.Button();
+            this.pctBoxGuindasteImagem = new System.Windows.Forms.PictureBox();
+            this.pctBoxGuindaste = new System.Windows.Forms.PictureBox();
+            this.pctBoxIma = new System.Windows.Forms.PictureBox();
+            this.pctBoxControle = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxControle)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindaste)).BeginInit();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxIma)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindasteImagem)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindaste)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxIma)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxControle)).BeginInit();
             this.SuspendLayout();
             // 
             // btnEnviarAltura
@@ -94,19 +97,19 @@
             this.lblAnguloFixo.TabIndex = 2;
             this.lblAnguloFixo.Text = "Ângulo";
             // 
-            // textBox1
+            // textBoxAnguloIn
             // 
-            this.textBox1.Location = new System.Drawing.Point(126, 390);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 3;
+            this.textBoxAnguloIn.Location = new System.Drawing.Point(126, 390);
+            this.textBoxAnguloIn.Name = "textBoxAnguloIn";
+            this.textBoxAnguloIn.Size = new System.Drawing.Size(100, 22);
+            this.textBoxAnguloIn.TabIndex = 3;
             // 
-            // textBox2
+            // textBoxAlturaIn
             // 
-            this.textBox2.Location = new System.Drawing.Point(126, 351);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 5;
+            this.textBoxAlturaIn.Location = new System.Drawing.Point(126, 351);
+            this.textBoxAlturaIn.Name = "textBoxAlturaIn";
+            this.textBoxAlturaIn.Size = new System.Drawing.Size(100, 22);
+            this.textBoxAlturaIn.TabIndex = 5;
             // 
             // lblAlturaFixo
             // 
@@ -188,6 +191,8 @@
             this.btnArrowUp.Size = new System.Drawing.Size(49, 54);
             this.btnArrowUp.TabIndex = 14;
             this.btnArrowUp.UseVisualStyleBackColor = true;
+            this.btnArrowUp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnArrowUp_MouseDown);
+            this.btnArrowUp.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnArrowUp_MouseUp);
             // 
             // btnArrowLeft
             // 
@@ -250,15 +255,6 @@
             this.label7.TabIndex = 24;
             this.label7.Text = "OFF";
             // 
-            // pctBoxControle
-            // 
-            this.pctBoxControle.BackColor = System.Drawing.Color.Red;
-            this.pctBoxControle.Location = new System.Drawing.Point(5, 3);
-            this.pctBoxControle.Name = "pctBoxControle";
-            this.pctBoxControle.Size = new System.Drawing.Size(24, 23);
-            this.pctBoxControle.TabIndex = 23;
-            this.pctBoxControle.TabStop = false;
-            // 
             // btnLigarGuindaste
             // 
             this.btnLigarGuindaste.BackColor = System.Drawing.SystemColors.Control;
@@ -269,15 +265,6 @@
             this.btnLigarGuindaste.Text = "Ligar Guindaste";
             this.btnLigarGuindaste.UseVisualStyleBackColor = false;
             this.btnLigarGuindaste.Click += new System.EventHandler(this.btnLigarGuindaste_Click);
-            // 
-            // pctBoxGuindaste
-            // 
-            this.pctBoxGuindaste.BackColor = System.Drawing.Color.Red;
-            this.pctBoxGuindaste.Location = new System.Drawing.Point(182, 23);
-            this.pctBoxGuindaste.Name = "pctBoxGuindaste";
-            this.pctBoxGuindaste.Size = new System.Drawing.Size(84, 81);
-            this.pctBoxGuindaste.TabIndex = 21;
-            this.pctBoxGuindaste.TabStop = false;
             // 
             // lblBoxGuindaste
             // 
@@ -323,6 +310,65 @@
             this.lblBoxIma.TabIndex = 27;
             this.lblBoxIma.Text = "OFF";
             // 
+            // btnLigarIma
+            // 
+            this.btnLigarIma.Location = new System.Drawing.Point(54, 275);
+            this.btnLigarIma.Name = "btnLigarIma";
+            this.btnLigarIma.Size = new System.Drawing.Size(77, 37);
+            this.btnLigarIma.TabIndex = 25;
+            this.btnLigarIma.Text = "Ligar Imã";
+            this.btnLigarIma.UseVisualStyleBackColor = true;
+            this.btnLigarIma.Click += new System.EventHandler(this.btnLigarDesligarIma_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.btnResetar);
+            this.panel3.Controls.Add(this.pctBoxGuindaste);
+            this.panel3.Controls.Add(this.lblBoxIma);
+            this.panel3.Controls.Add(this.btnEnviarAltura);
+            this.panel3.Controls.Add(this.pctBoxIma);
+            this.panel3.Controls.Add(this.btnEnviarAngulo);
+            this.panel3.Controls.Add(this.btnLigarIma);
+            this.panel3.Controls.Add(this.lblAnguloFixo);
+            this.panel3.Controls.Add(this.textBoxAnguloIn);
+            this.panel3.Controls.Add(this.lblBoxGuindaste);
+            this.panel3.Controls.Add(this.lblAlturaFixo);
+            this.panel3.Controls.Add(this.textBoxAlturaIn);
+            this.panel3.Controls.Add(this.btnLigarGuindaste);
+            this.panel3.Location = new System.Drawing.Point(984, 12);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(347, 426);
+            this.panel3.TabIndex = 28;
+            // 
+            // btnResetar
+            // 
+            this.btnResetar.Location = new System.Drawing.Point(55, 190);
+            this.btnResetar.Name = "btnResetar";
+            this.btnResetar.Size = new System.Drawing.Size(75, 23);
+            this.btnResetar.TabIndex = 28;
+            this.btnResetar.Text = "Resetar";
+            this.btnResetar.UseVisualStyleBackColor = true;
+            this.btnResetar.Click += new System.EventHandler(this.btnResetar_Click);
+            // 
+            // pctBoxGuindasteImagem
+            // 
+            this.pctBoxGuindasteImagem.Image = global::WindowsFormsApp1.Properties.Resources.guindaste1;
+            this.pctBoxGuindasteImagem.Location = new System.Drawing.Point(510, 55);
+            this.pctBoxGuindasteImagem.Name = "pctBoxGuindasteImagem";
+            this.pctBoxGuindasteImagem.Size = new System.Drawing.Size(323, 313);
+            this.pctBoxGuindasteImagem.TabIndex = 29;
+            this.pctBoxGuindasteImagem.TabStop = false;
+            // 
+            // pctBoxGuindaste
+            // 
+            this.pctBoxGuindaste.BackColor = System.Drawing.Color.Red;
+            this.pctBoxGuindaste.Location = new System.Drawing.Point(182, 23);
+            this.pctBoxGuindaste.Name = "pctBoxGuindaste";
+            this.pctBoxGuindaste.Size = new System.Drawing.Size(84, 81);
+            this.pctBoxGuindaste.TabIndex = 21;
+            this.pctBoxGuindaste.TabStop = false;
+            // 
             // pctBoxIma
             // 
             this.pctBoxIma.BackColor = System.Drawing.Color.Red;
@@ -332,55 +378,37 @@
             this.pctBoxIma.TabIndex = 26;
             this.pctBoxIma.TabStop = false;
             // 
-            // btnLigarIma
+            // pctBoxControle
             // 
-            this.btnLigarIma.Location = new System.Drawing.Point(54, 275);
-            this.btnLigarIma.Name = "btnLigarIma";
-            this.btnLigarIma.Size = new System.Drawing.Size(77, 37);
-            this.btnLigarIma.TabIndex = 25;
-            this.btnLigarIma.Text = "Ligar Imã";
-            this.btnLigarIma.UseVisualStyleBackColor = true;
-            this.btnLigarIma.Click += new System.EventHandler(this.btnLigarIma_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.pctBoxGuindaste);
-            this.panel3.Controls.Add(this.lblBoxIma);
-            this.panel3.Controls.Add(this.btnEnviarAltura);
-            this.panel3.Controls.Add(this.pctBoxIma);
-            this.panel3.Controls.Add(this.btnEnviarAngulo);
-            this.panel3.Controls.Add(this.btnLigarIma);
-            this.panel3.Controls.Add(this.lblAnguloFixo);
-            this.panel3.Controls.Add(this.textBox1);
-            this.panel3.Controls.Add(this.lblBoxGuindaste);
-            this.panel3.Controls.Add(this.lblAlturaFixo);
-            this.panel3.Controls.Add(this.textBox2);
-            this.panel3.Controls.Add(this.btnLigarGuindaste);
-            this.panel3.Location = new System.Drawing.Point(423, 12);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(347, 426);
-            this.panel3.TabIndex = 28;
+            this.pctBoxControle.BackColor = System.Drawing.Color.Red;
+            this.pctBoxControle.Location = new System.Drawing.Point(5, 3);
+            this.pctBoxControle.Name = "pctBoxControle";
+            this.pctBoxControle.Size = new System.Drawing.Size(24, 23);
+            this.pctBoxControle.TabIndex = 23;
+            this.pctBoxControle.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1378, 450);
+            this.Controls.Add(this.pctBoxGuindasteImagem);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxControle)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindaste)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxIma)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindasteImagem)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindaste)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxIma)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxControle)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -390,8 +418,8 @@
         private System.Windows.Forms.Button btnEnviarAltura;
         private System.Windows.Forms.Button btnEnviarAngulo;
         private System.Windows.Forms.Label lblAnguloFixo;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxAnguloIn;
+        private System.Windows.Forms.TextBox textBoxAlturaIn;
         private System.Windows.Forms.Label lblAlturaFixo;
         private System.Windows.Forms.Label lblAlturaInfoFixo;
         private System.Windows.Forms.Label lblAnguloInfoFixo;
@@ -416,6 +444,8 @@
         private System.Windows.Forms.PictureBox pctBoxIma;
         private System.Windows.Forms.Button btnLigarIma;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnResetar;
+        private System.Windows.Forms.PictureBox pctBoxGuindasteImagem;
     }
 }
 
