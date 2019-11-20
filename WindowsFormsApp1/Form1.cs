@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,6 +22,17 @@ namespace WindowsFormsApp1
         int alturaReferencia = 0;
         int imaDesligado = 1;
         int mensagemErroTrue = 0;
+        int beepDistancia = 0;
+        int descendo = 0;
+        int passouLimiteSensor = 0;
+        int controleManualLigado = 0;
+        SoundPlayer beepLento1 = new SoundPlayer(@"C:\SonsVS\guindaste\beepLento1.wav");
+        SoundPlayer beepLento2 = new SoundPlayer(@"C:\SonsVS\guindaste\beepLento2.wav");
+        SoundPlayer beepMedio = new SoundPlayer(@"C:\SonsVS\guindaste\beepMedio1.wav");
+        SoundPlayer beepRapido1 = new SoundPlayer(@"C:\SonsVS\guindaste\beepRapido1.wav");
+        SoundPlayer beepRapido2 = new SoundPlayer(@"C:\SonsVS\guindaste\beepRapido2.wav");
+        SoundPlayer beepFatal = new SoundPlayer(@"C:\SonsVS\guindaste\beepFatal.wav");
+
         public Form1()
         {
             InitializeComponent();
@@ -35,23 +47,38 @@ namespace WindowsFormsApp1
             textBoxAltura.Text = "0";
             textBoxAngulo.Text = "0";
             textBoxDistancia.Text = "0";
+            
 
         }
 
         private void btnLigarGuindaste_Click(object sender, EventArgs e)
         {
+            byte[] saida = new byte[2];
+            saida[0] = 3;
+            
             if (serialPort1.IsOpen)
             {
+                saida[1] = 0;
                 pctBoxGuindasteImagem.Image = Properties.Resources.guindaste2;
+                serialPort1.Write(saida, 0, 2);
                 serialPort1.Close();
                 pctBoxGuindaste.BackColor = Color.Red;
                 lblBoxGuindaste.Text = "OFF";
                 btnLigarGuindaste.Text = "Ligar Guindaste";
+
+                pictureBox1.BackColor = Color.SeaShell;
+                pictureBox2.BackColor = Color.SeaShell;
+                pictureBox3.BackColor = Color.SeaShell;
+                pictureBox4.BackColor = Color.SeaShell;
+                pictureBox5.BackColor = Color.SeaShell;
+                pictureBox6.BackColor = Color.SeaShell;
             }
             else
             {
+                saida[1] = 1;
                 pctBoxGuindasteImagem.Image = Properties.Resources.guindaste1;
                 serialPort1.Open();
+                serialPort1.Write(saida, 0, 2);
                 pctBoxGuindaste.BackColor = Color.Lime;
                 lblBoxGuindaste.Text = "ON";
                 btnLigarGuindaste.Text = "Desligar Guindaste";
@@ -75,6 +102,16 @@ namespace WindowsFormsApp1
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation,
                 MessageBoxDefaultButton.Button1);
+                return;
+            }
+            if (alturaReferencia + alturaInt > 40 || alturaReferencia + alturaInt < 0)
+            {
+                MessageBox.Show("Angulo fora do limite",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+
                 return;
             }
             if (alturaInt < 0)
@@ -126,7 +163,7 @@ namespace WindowsFormsApp1
                 MessageBoxDefaultButton.Button1);
                 return;
             }
-            if(anguloReferencia + anguloInt > 180 || anguloReferencia + anguloInt < -180)
+            if(anguloReferencia + anguloInt > 180 || anguloReferencia + anguloInt < 0)
             {
                 MessageBox.Show("Angulo fora do limite",
                 "Erro",
@@ -195,19 +232,20 @@ namespace WindowsFormsApp1
             }
             if (saida[0] == 4)
             {
-                int sNegativo = -(Int32.Parse(s));
-                s = sNegativo.ToString();
                 this.Invoke(new EventHandler(atualizarTextBoxAngulo));
             }
             if (saida[0] == 5)
             {
-                int sNegativo = -(Int32.Parse(s));
-                s = sNegativo.ToString();
                 this.Invoke(new EventHandler(atualizarTextBoxAltura));
             }
             if (saida[0] == 6)
             {
                 
+                this.Invoke(new EventHandler(atualizarAlturaAnguloLimite));
+            }
+            if (saida[0] == 7)
+            {
+
                 this.Invoke(new EventHandler(atualizarTextBoxAngulo));
             }
 
@@ -218,6 +256,94 @@ namespace WindowsFormsApp1
         private void atualizarTextBoxDistancia(object sender, EventArgs e)
         {
             textBoxDistancia.Text = s;
+            if (descendo == 1 && passouLimiteSensor == 0)
+            {
+                if (Int32.Parse(s) < 4)
+                {
+                    if (beepDistancia == 4) return;
+                    beepFatal.Play();
+                    beepDistancia = 4;
+                    pictureBox1.BackColor = Color.Red;
+                    pictureBox2.BackColor = Color.Red;
+                    pictureBox3.BackColor = Color.Gold;
+                    pictureBox4.BackColor = Color.Yellow;
+                    pictureBox5.BackColor = Color.LimeGreen;
+                    pictureBox6.BackColor = Color.Green;
+                    passouLimiteSensor = 1;
+                    pctBoxGuindasteImagem.Image = Properties.Resources.guindastecrash1;
+                }
+                else if (Int32.Parse(s) < 6)
+                {
+                    if (beepDistancia == 6) return;
+                    beepRapido2.Play();
+                    beepDistancia = 6;
+                    pictureBox1.BackColor = Color.SeaShell;
+                    pictureBox2.BackColor = Color.Red;
+                    pictureBox3.BackColor = Color.Gold;
+                    pictureBox4.BackColor = Color.Yellow;
+                    pictureBox5.BackColor = Color.LimeGreen;
+                    pictureBox6.BackColor = Color.Green;
+                    passouLimiteSensor = 0;
+                }
+                else if (Int32.Parse(s) < 8)
+                {
+                    if (beepDistancia == 8) return;
+                    beepDistancia = 8;
+                    beepRapido1.Play();
+                    pictureBox1.BackColor = Color.SeaShell;
+                    pictureBox2.BackColor = Color.SeaShell;
+                    pictureBox3.BackColor = Color.Yellow;
+                    pictureBox4.BackColor = Color.Gold;
+                    pictureBox5.BackColor = Color.LimeGreen;
+                    pictureBox6.BackColor = Color.Green;
+                    passouLimiteSensor = 0;
+                }
+                else if (Int32.Parse(s) < 10)
+                {
+                    if (beepDistancia == 10) return;
+                    beepDistancia = 10;
+                    beepMedio.Play();
+                    pictureBox1.BackColor = Color.SeaShell;
+                    pictureBox2.BackColor = Color.SeaShell;
+                    pictureBox3.BackColor = Color.SeaShell;
+                    pictureBox4.BackColor = Color.Gold;
+                    pictureBox5.BackColor = Color.LimeGreen;
+                    pictureBox6.BackColor = Color.Green;
+
+                }
+                else if (Int32.Parse(s) < 12)
+                {
+                    if (beepDistancia == 12) return;
+                    beepDistancia = 12;
+                    beepLento2.Play();
+                    pictureBox1.BackColor = Color.SeaShell;
+                    pictureBox2.BackColor = Color.SeaShell;
+                    pictureBox3.BackColor = Color.SeaShell;
+                    pictureBox4.BackColor = Color.SeaShell;
+                    pictureBox5.BackColor = Color.LimeGreen;
+                    pictureBox6.BackColor = Color.Green;
+
+
+                }
+                else
+                {
+                    if (beepDistancia == 11) return;
+                    beepDistancia = 11;
+                    pictureBox1.BackColor = Color.SeaShell;
+                    pictureBox2.BackColor = Color.SeaShell;
+                    pictureBox3.BackColor = Color.SeaShell;
+                    pictureBox4.BackColor = Color.SeaShell;
+                    pictureBox5.BackColor = Color.SeaShell;
+                    pictureBox6.BackColor = Color.Green;
+
+
+                }
+            }
+            
+            
+            
+
+            
         }
         private void atualizarTextBoxAngulo(object sender, EventArgs e)
         {
@@ -226,7 +352,7 @@ namespace WindowsFormsApp1
         }
         private void atualizarTextBoxAltura(object sender, EventArgs e)
         {
-            alturaReferencia = alturaReferencia + Int32.Parse(s);
+            alturaReferencia = Int32.Parse(s);
             textBoxAltura.Text = s;
         }
         private void atualizarIma(object sender, EventArgs e)
@@ -247,30 +373,32 @@ namespace WindowsFormsApp1
             }
 
         }
+        private void atualizarAlturaAnguloLimite(object sender, EventArgs e)
+        {
+            if (s.Equals("1"))
+            {
+                MessageBox.Show("Altura fora do limite",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                MessageBox.Show("Angulo fora do limite",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+            }
+            
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void btnArrowUp_MouseDown(object sender, MouseEventArgs e)
-        {
-            byte[] saida = new byte[2];
-            saida[0] = 6;
-            saida[1] = 1;
-            try
-            {
-                serialPort1.Write(saida, 0, 2);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ligue o guindaste",
-                "Erro",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
-                return;
-            }
-        }
+        
 
         private void btnLigarDesligarIma_Click(object sender, EventArgs e)
         {
@@ -302,6 +430,108 @@ namespace WindowsFormsApp1
             }
         }
 
+    
+
+        private void btnResetar_Click(object sender, EventArgs e)
+        {
+            byte[] saida = new byte[2];
+            
+            saida[0] = 7;
+            saida[1] = 0;
+            descendo = 0;
+            passouLimiteSensor = 0;
+            pictureBox1.BackColor = Color.SeaShell;
+            pictureBox2.BackColor = Color.SeaShell;
+            pictureBox3.BackColor = Color.SeaShell;
+            pictureBox4.BackColor = Color.SeaShell;
+            pictureBox5.BackColor = Color.SeaShell;
+            pictureBox6.BackColor = Color.SeaShell;
+            beepMedio.Stop();
+            beepLento1.Stop();
+            beepLento2.Stop();
+            beepFatal.Stop();
+            beepRapido1.Stop();
+            beepRapido2.Stop();
+
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+        private void btnAutomatico_Click(object sender, EventArgs e)
+        {
+            byte[] saida = new byte[2];
+            saida[0] = 7;
+            saida[1] = 1;
+       
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+        private void btnArrowUp_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(controleManualLigado == 0)
+            {
+                MessageBox.Show("Ligue o controle manual",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+            byte[] saida = new byte[2];
+            saida[0] = 6;
+            saida[1] = 1;
+            pictureBox1.BackColor = Color.SeaShell;
+            pictureBox2.BackColor = Color.SeaShell;
+            pictureBox3.BackColor = Color.SeaShell;
+            pictureBox4.BackColor = Color.SeaShell;
+            pictureBox5.BackColor = Color.SeaShell;
+            pictureBox6.BackColor = Color.SeaShell;
+            beepMedio.Stop();
+            beepLento1.Stop();
+            beepLento2.Stop();
+            beepFatal.Stop();
+            beepRapido1.Stop();
+            beepRapido2.Stop();
+            descendo = 0;
+            passouLimiteSensor = 0;
+
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
         private void btnArrowUp_MouseUp(object sender, MouseEventArgs e)
         {
             byte[] saida = new byte[2];
@@ -321,14 +551,196 @@ namespace WindowsFormsApp1
                 return;
             }
         }
-
-        private void btnResetar_Click(object sender, EventArgs e)
+        private void btnArrowRigth_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (controleManualLigado == 0)
+            {
+                MessageBox.Show("Ligue o controle manual",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+            byte[] saida = new byte[2];
+            saida[0] = 6;
+            saida[1] = 2;
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+        private void btnArrowRigth_MouseUp(object sender, MouseEventArgs e)
         {
             byte[] saida = new byte[2];
-            
-            saida[0] = 7;
+            saida[0] = 6;
+            saida[1] = 0;
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+       
+
+        private void btnArrowDown_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (controleManualLigado == 0)
+            {
+                MessageBox.Show("Ligue o controle manual",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+            byte[] saida = new byte[2];
+            saida[0] = 6;
+            saida[1] = 3;
+            descendo = 1;
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+        private void btnArrowDown_MouseUp(object sender, MouseEventArgs e)
+        {
+            byte[] saida = new byte[2];
+            saida[0] = 6;
             saida[1] = 0;
             
+           
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+        private void btnArrowLeft_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (controleManualLigado == 0)
+            {
+                MessageBox.Show("Ligue o controle manual",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+            byte[] saida = new byte[2];
+            saida[0] = 6;
+            saida[1] = 4;
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+        private void btnArrowLeft_MouseUp(object sender, MouseEventArgs e)
+        {
+            byte[] saida = new byte[2];
+            saida[0] = 6;
+            saida[1] = 0;
+            try
+            {
+                serialPort1.Write(saida, 0, 2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
+        }
+
+        private void btnControleManual_Click(object sender, EventArgs e)
+        {
+            if (controleManualLigado == 0)
+            {
+                pctBoxGuindasteImagem.Image = Properties.Resources.joystick2;
+                controleManualLigado = 1;
+                pctBoxControle.BackColor = Color.Lime;
+                lblControle.Text = "ON";
+                btnControleManual.Text = "Desligar Controle Manual";
+            }
+            else if (controleManualLigado == 1)
+            {
+                pctBoxGuindasteImagem.Image = Properties.Resources.guindaste1;
+                controleManualLigado = 0;
+                pctBoxControle.BackColor = Color.Red;
+                lblControle.Text = "OFF";
+                btnControleManual.Text = "Habilitar Controle Manual";
+                pictureBox1.BackColor = Color.SeaShell;
+                pictureBox2.BackColor = Color.SeaShell;
+                pictureBox3.BackColor = Color.SeaShell;
+                pictureBox4.BackColor = Color.SeaShell;
+                pictureBox5.BackColor = Color.SeaShell;
+                pictureBox6.BackColor = Color.SeaShell;
+                beepMedio.Stop();
+                beepLento1.Stop();
+                beepLento2.Stop();
+                beepFatal.Stop();
+                beepRapido1.Stop();
+                beepRapido2.Stop();
+                descendo = 0;
+                passouLimiteSensor = 0;
+            }
+        }
+
+        private void btnMapear_Click(object sender, EventArgs e)
+        {
+            byte[] saida = new byte[2];
+            saida[0] = 7;
+            saida[1] = 2;
 
             try
             {

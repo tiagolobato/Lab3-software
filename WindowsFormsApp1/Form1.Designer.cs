@@ -44,9 +44,9 @@
             this.btnArrowLeft = new System.Windows.Forms.Button();
             this.btnArrowRigth = new System.Windows.Forms.Button();
             this.btnArrowDown = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnControleManual = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblControle = new System.Windows.Forms.Label();
             this.btnLigarGuindaste = new System.Windows.Forms.Button();
             this.lblBoxGuindaste = new System.Windows.Forms.Label();
             this.lblInfoFixo = new System.Windows.Forms.Label();
@@ -54,18 +54,42 @@
             this.lblBoxIma = new System.Windows.Forms.Label();
             this.btnLigarIma = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnAutomatico = new System.Windows.Forms.Button();
             this.btnResetar = new System.Windows.Forms.Button();
+            this.btnMapear = new System.Windows.Forms.Button();
             this.pctBoxGuindasteImagem = new System.Windows.Forms.PictureBox();
             this.pctBoxGuindaste = new System.Windows.Forms.PictureBox();
             this.pctBoxIma = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pctBoxControle = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox20 = new System.Windows.Forms.PictureBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindasteImagem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindaste)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxIma)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxControle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             this.SuspendLayout();
             // 
             // btnEnviarAltura
@@ -202,6 +226,8 @@
             this.btnArrowLeft.Size = new System.Drawing.Size(57, 58);
             this.btnArrowLeft.TabIndex = 15;
             this.btnArrowLeft.UseVisualStyleBackColor = true;
+            this.btnArrowLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnArrowLeft_MouseDown);
+            this.btnArrowLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnArrowLeft_MouseUp);
             // 
             // btnArrowRigth
             // 
@@ -211,6 +237,8 @@
             this.btnArrowRigth.Size = new System.Drawing.Size(60, 58);
             this.btnArrowRigth.TabIndex = 16;
             this.btnArrowRigth.UseVisualStyleBackColor = true;
+            this.btnArrowRigth.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnArrowRigth_MouseDown);
+            this.btnArrowRigth.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnArrowRigth_MouseUp);
             // 
             // btnArrowDown
             // 
@@ -220,40 +248,49 @@
             this.btnArrowDown.Size = new System.Drawing.Size(49, 58);
             this.btnArrowDown.TabIndex = 17;
             this.btnArrowDown.UseVisualStyleBackColor = true;
+            this.btnArrowDown.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnArrowDown_MouseDown);
+            this.btnArrowDown.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnArrowDown_MouseUp);
             // 
-            // button3
+            // btnControleManual
             // 
-            this.button3.Location = new System.Drawing.Point(75, 193);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(201, 45);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Habilitar Controle Manual";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnControleManual.Location = new System.Drawing.Point(75, 193);
+            this.btnControleManual.Name = "btnControleManual";
+            this.btnControleManual.Size = new System.Drawing.Size(201, 45);
+            this.btnControleManual.TabIndex = 18;
+            this.btnControleManual.Text = "Habilitar Controle Manual";
+            this.btnControleManual.UseVisualStyleBackColor = true;
+            this.btnControleManual.Click += new System.EventHandler(this.btnControleManual_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.pictureBox3);
+            this.panel1.Controls.Add(this.lblControle);
+            this.panel1.Controls.Add(this.pictureBox4);
             this.panel1.Controls.Add(this.btnArrowRigth);
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.pctBoxControle);
+            this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.btnArrowUp);
+            this.panel1.Controls.Add(this.pictureBox5);
             this.panel1.Controls.Add(this.btnArrowLeft);
-            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.pictureBox6);
+            this.panel1.Controls.Add(this.btnControleManual);
             this.panel1.Controls.Add(this.btnArrowDown);
             this.panel1.Location = new System.Drawing.Point(46, 160);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(339, 278);
             this.panel1.TabIndex = 19;
             // 
-            // label7
+            // lblControle
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(35, 9);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 17);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "OFF";
+            this.lblControle.AutoSize = true;
+            this.lblControle.Location = new System.Drawing.Point(35, 9);
+            this.lblControle.Name = "lblControle";
+            this.lblControle.Size = new System.Drawing.Size(35, 17);
+            this.lblControle.TabIndex = 24;
+            this.lblControle.Text = "OFF";
             // 
             // btnLigarGuindaste
             // 
@@ -323,6 +360,8 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.btnMapear);
+            this.panel3.Controls.Add(this.btnAutomatico);
             this.panel3.Controls.Add(this.btnResetar);
             this.panel3.Controls.Add(this.pctBoxGuindaste);
             this.panel3.Controls.Add(this.lblBoxIma);
@@ -341,22 +380,45 @@
             this.panel3.Size = new System.Drawing.Size(347, 426);
             this.panel3.TabIndex = 28;
             // 
+            // btnAutomatico
+            // 
+            this.btnAutomatico.Location = new System.Drawing.Point(126, 186);
+            this.btnAutomatico.Name = "btnAutomatico";
+            this.btnAutomatico.Size = new System.Drawing.Size(75, 49);
+            this.btnAutomatico.TabIndex = 29;
+            this.btnAutomatico.Text = "Buscar Moeda";
+            this.btnAutomatico.UseVisualStyleBackColor = true;
+            this.btnAutomatico.Click += new System.EventHandler(this.btnAutomatico_Click);
+            // 
             // btnResetar
             // 
-            this.btnResetar.Location = new System.Drawing.Point(55, 190);
+            this.btnResetar.Location = new System.Drawing.Point(28, 186);
             this.btnResetar.Name = "btnResetar";
-            this.btnResetar.Size = new System.Drawing.Size(75, 23);
+            this.btnResetar.Size = new System.Drawing.Size(75, 49);
             this.btnResetar.TabIndex = 28;
             this.btnResetar.Text = "Resetar";
             this.btnResetar.UseVisualStyleBackColor = true;
             this.btnResetar.Click += new System.EventHandler(this.btnResetar_Click);
             // 
+            // btnMapear
+            // 
+            this.btnMapear.Location = new System.Drawing.Point(230, 186);
+            this.btnMapear.Name = "btnMapear";
+            this.btnMapear.Size = new System.Drawing.Size(75, 49);
+            this.btnMapear.TabIndex = 30;
+            this.btnMapear.Text = "Mapear e Buscar";
+            this.btnMapear.UseVisualStyleBackColor = true;
+            this.btnMapear.Click += new System.EventHandler(this.btnMapear_Click);
+            // 
             // pctBoxGuindasteImagem
             // 
-            this.pctBoxGuindasteImagem.Image = global::WindowsFormsApp1.Properties.Resources.guindaste1;
-            this.pctBoxGuindasteImagem.Location = new System.Drawing.Point(510, 55);
+            this.pctBoxGuindasteImagem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pctBoxGuindasteImagem.Image = global::WindowsFormsApp1.Properties.Resources.guindastecrash1;
+            this.pctBoxGuindasteImagem.Location = new System.Drawing.Point(469, 12);
             this.pctBoxGuindasteImagem.Name = "pctBoxGuindasteImagem";
-            this.pctBoxGuindasteImagem.Size = new System.Drawing.Size(323, 313);
+            this.pctBoxGuindasteImagem.Size = new System.Drawing.Size(442, 427);
             this.pctBoxGuindasteImagem.TabIndex = 29;
             this.pctBoxGuindasteImagem.TabStop = false;
             // 
@@ -378,6 +440,33 @@
             this.pctBoxIma.TabIndex = 26;
             this.pctBoxIma.TabStop = false;
             // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.SeaShell;
+            this.pictureBox3.Location = new System.Drawing.Point(244, 45);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(74, 16);
+            this.pictureBox3.TabIndex = 41;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.SeaShell;
+            this.pictureBox4.Location = new System.Drawing.Point(241, 32);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(82, 16);
+            this.pictureBox4.TabIndex = 40;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.SeaShell;
+            this.pictureBox1.Location = new System.Drawing.Point(254, 71);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(50, 16);
+            this.pictureBox1.TabIndex = 39;
+            this.pictureBox1.TabStop = false;
+            // 
             // pctBoxControle
             // 
             this.pctBoxControle.BackColor = System.Drawing.Color.Red;
@@ -386,6 +475,73 @@
             this.pctBoxControle.Size = new System.Drawing.Size(24, 23);
             this.pctBoxControle.TabIndex = 23;
             this.pctBoxControle.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.SeaShell;
+            this.pictureBox2.Location = new System.Drawing.Point(249, 59);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(62, 16);
+            this.pictureBox2.TabIndex = 38;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.SeaShell;
+            this.pictureBox5.Location = new System.Drawing.Point(234, 22);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(94, 16);
+            this.pictureBox5.TabIndex = 31;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.BackColor = System.Drawing.Color.SeaShell;
+            this.pictureBox6.Location = new System.Drawing.Point(227, 10);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(107, 16);
+            this.pictureBox6.TabIndex = 30;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox20
+            // 
+            this.pictureBox20.Location = new System.Drawing.Point(453, 299);
+            this.pictureBox20.Name = "pictureBox20";
+            this.pictureBox20.Size = new System.Drawing.Size(74, 16);
+            this.pictureBox20.TabIndex = 31;
+            this.pictureBox20.TabStop = false;
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Location = new System.Drawing.Point(453, 309);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(74, 16);
+            this.pictureBox10.TabIndex = 40;
+            this.pictureBox10.TabStop = false;
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Location = new System.Drawing.Point(453, 322);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(74, 16);
+            this.pictureBox9.TabIndex = 41;
+            this.pictureBox9.TabStop = false;
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.Location = new System.Drawing.Point(453, 340);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(74, 16);
+            this.pictureBox12.TabIndex = 38;
+            this.pictureBox12.TabStop = false;
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Location = new System.Drawing.Point(453, 352);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(74, 16);
+            this.pictureBox11.TabIndex = 39;
+            this.pictureBox11.TabStop = false;
             // 
             // Form1
             // 
@@ -408,7 +564,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindasteImagem)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxGuindaste)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxIma)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxControle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -431,11 +598,11 @@
         private System.Windows.Forms.Button btnArrowLeft;
         private System.Windows.Forms.Button btnArrowRigth;
         private System.Windows.Forms.Button btnArrowDown;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnControleManual;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnLigarGuindaste;
         private System.Windows.Forms.PictureBox pctBoxGuindaste;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblControle;
         private System.Windows.Forms.PictureBox pctBoxControle;
         private System.Windows.Forms.Label lblBoxGuindaste;
         private System.Windows.Forms.Label lblInfoFixo;
@@ -445,6 +612,19 @@
         private System.Windows.Forms.Button btnLigarIma;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnResetar;
+        private System.Windows.Forms.Button btnAutomatico;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox20;
+        private System.Windows.Forms.Button btnMapear;
         private System.Windows.Forms.PictureBox pctBoxGuindasteImagem;
     }
 }
