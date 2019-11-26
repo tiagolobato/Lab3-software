@@ -26,6 +26,8 @@ namespace WindowsFormsApp1
         int descendo = 0;
         int passouLimiteSensor = 0;
         int controleManualLigado = 0;
+        int guindasteLigado = 0;
+        int sinalControleManual = 0;
         SoundPlayer beepLento1 = new SoundPlayer(@"C:\SonsVS\guindaste\beepLento1.wav");
         SoundPlayer beepLento2 = new SoundPlayer(@"C:\SonsVS\guindaste\beepLento2.wav");
         SoundPlayer beepMedio = new SoundPlayer(@"C:\SonsVS\guindaste\beepMedio1.wav");
@@ -59,7 +61,7 @@ namespace WindowsFormsApp1
             if (serialPort1.IsOpen)
             {
                 saida[1] = 0;
-                pctBoxGuindasteImagem.Image = Properties.Resources.guindaste2;
+                pictureBoxGuindaste.Image = Properties.Resources.guindaste_desligado;
                 serialPort1.Write(saida, 0, 2);
                 serialPort1.Close();
                 pctBoxGuindaste.BackColor = Color.Red;
@@ -72,16 +74,30 @@ namespace WindowsFormsApp1
                 pictureBox4.BackColor = Color.SeaShell;
                 pictureBox5.BackColor = Color.SeaShell;
                 pictureBox6.BackColor = Color.SeaShell;
+                guindasteLigado = 0;
+                controleManualLigado = 0;
+                pctBoxControle.BackColor = Color.Red;
+                lblControle.Text = "OFF";
+                btnControleManual.Text = "Habilitar Controle Manual";
+                beepMedio.Stop();
+                beepLento1.Stop();
+                beepLento2.Stop();
+                beepFatal.Stop();
+                beepRapido1.Stop();
+                beepRapido2.Stop();
+                descendo = 0;
+                passouLimiteSensor = 0;
             }
             else
             {
                 saida[1] = 1;
-                pctBoxGuindasteImagem.Image = Properties.Resources.guindaste1;
+                pictureBoxGuindaste.Image = Properties.Resources.guindaste_ligado;
                 serialPort1.Open();
                 serialPort1.Write(saida, 0, 2);
                 pctBoxGuindaste.BackColor = Color.Lime;
                 lblBoxGuindaste.Text = "ON";
                 btnLigarGuindaste.Text = "Desligar Guindaste";
+                guindasteLigado = 1;
             }
             
         }
@@ -133,6 +149,7 @@ namespace WindowsFormsApp1
             try
             {
                 serialPort1.Write(saida, 0, 2);
+                sinalControleManual = 0;
             }
             catch (Exception ex)
             {
@@ -192,6 +209,7 @@ namespace WindowsFormsApp1
             try
             {
                 serialPort1.Write(saida, 0, 2);
+                sinalControleManual = 0;
             }
             catch (Exception ex)
             {
@@ -270,7 +288,7 @@ namespace WindowsFormsApp1
                     pictureBox5.BackColor = Color.LimeGreen;
                     pictureBox6.BackColor = Color.Green;
                     passouLimiteSensor = 1;
-                    pctBoxGuindasteImagem.Image = Properties.Resources.guindastecrash1;
+                    //pictureBoxGuindaste.Image = Properties.Resources.guindastecrash1;
                 }
                 else if (Int32.Parse(s) < 6)
                 {
@@ -349,11 +367,27 @@ namespace WindowsFormsApp1
         {
             anguloReferencia = Int32.Parse(s);
             textBoxAngulo.Text = anguloReferencia.ToString();
+            if(sinalControleManual == 0)
+            {
+                pictureBoxGuindaste.Image = Properties.Resources.guindaste_ligado;
+            }
+            else
+            {
+                pictureBoxGuindaste.Image = Properties.Resources.controle__manual;
+            }
         }
         private void atualizarTextBoxAltura(object sender, EventArgs e)
         {
             alturaReferencia = Int32.Parse(s);
             textBoxAltura.Text = s;
+            if (sinalControleManual == 0)
+            {
+                pictureBoxGuindaste.Image = Properties.Resources.guindaste_ligado;
+            }
+            else
+            {
+                pictureBoxGuindaste.Image = Properties.Resources.controle__manual;
+            }
         }
         private void atualizarIma(object sender, EventArgs e)
         {
@@ -521,6 +555,8 @@ namespace WindowsFormsApp1
             try
             {
                 serialPort1.Write(saida, 0, 2);
+                sinalControleManual = 1;
+                pictureBoxGuindaste.Image = Properties.Resources.subindo_ima;
             }
             catch (Exception ex)
             {
@@ -568,6 +604,8 @@ namespace WindowsFormsApp1
             try
             {
                 serialPort1.Write(saida, 0, 2);
+                sinalControleManual = 1;
+                pictureBoxGuindaste.Image = Properties.Resources.girando_horario;
             }
             catch (Exception ex)
             {
@@ -619,6 +657,8 @@ namespace WindowsFormsApp1
             try
             {
                 serialPort1.Write(saida, 0, 2);
+                sinalControleManual = 1;
+                pictureBoxGuindaste.Image = Properties.Resources.descendo_ima;
             }
             catch (Exception ex)
             {
@@ -655,6 +695,7 @@ namespace WindowsFormsApp1
 
         private void btnArrowLeft_MouseDown(object sender, MouseEventArgs e)
         {
+            
             if (controleManualLigado == 0)
             {
                 MessageBox.Show("Ligue o controle manual",
@@ -670,6 +711,8 @@ namespace WindowsFormsApp1
             try
             {
                 serialPort1.Write(saida, 0, 2);
+                sinalControleManual = 1;
+                pictureBoxGuindaste.Image = Properties.Resources.girando_antihorario;
             }
             catch (Exception ex)
             {
@@ -704,9 +747,18 @@ namespace WindowsFormsApp1
 
         private void btnControleManual_Click(object sender, EventArgs e)
         {
+            if(guindasteLigado ==0)
+            {
+                MessageBox.Show("Ligue o guindaste",
+                "Erro",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+                return;
+            }
             if (controleManualLigado == 0)
             {
-                pctBoxGuindasteImagem.Image = Properties.Resources.joystick2;
+                pictureBoxGuindaste.Image = Properties.Resources.controle__manual;
                 controleManualLigado = 1;
                 pctBoxControle.BackColor = Color.Lime;
                 lblControle.Text = "ON";
@@ -714,7 +766,7 @@ namespace WindowsFormsApp1
             }
             else if (controleManualLigado == 1)
             {
-                pctBoxGuindasteImagem.Image = Properties.Resources.guindaste1;
+                pictureBoxGuindaste.Image = Properties.Resources.guindaste_ligado;
                 controleManualLigado = 0;
                 pctBoxControle.BackColor = Color.Red;
                 lblControle.Text = "OFF";

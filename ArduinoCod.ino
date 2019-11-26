@@ -5,8 +5,8 @@ const int stepsPerRevolution = 32;
 int contador = 100;
 //Inicializa a biblioteca utilizando as portas de 8 a 11 para 
 //ligacao ao motor 
-Stepper myStepperAltura(stepsPerRevolution, 10,12,11,13); 
-Stepper myStepperAngulo(stepsPerRevolution, 6,8,7,9); 
+Stepper myStepperAngulo(stepsPerRevolution, 10,12,11,13); 
+Stepper myStepperAltura(stepsPerRevolution,6,8,7,9); 
 //Stepper myStepperAngulo(stepsPerRevolution, 10,12,11,13); 
 //Stepper myStepperAltura(stepsPerRevolution, 6,8,7,9); 
 int controleManual = 0;
@@ -14,11 +14,12 @@ double anguloReferenciaDouble = 0;
 double alturaReferenciaDouble = 0;
 int stepAnguloTotal = 0;
 int stepAlturaTotal = 0;
-Ultrasonic ultrassom(4,3); 
+Ultrasonic ultrassom(5,4); 
 long distancia;
-int stepDistancia = 550;
+int stepDistancia = 600;
 int stepAlturaMaxima = 40;
 int sensorLigado = 0;
+int menorDistanciaBuscar = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,14 +29,14 @@ controleManual = 0;
 anguloReferenciaDouble = 0;
 alturaReferenciaDouble = 0;
 
-myStepperAngulo.setSpeed(500);
+myStepperAngulo.setSpeed(100);
 myStepperAltura.setSpeed(1000);
 stepAnguloTotal = 0;
 stepAlturaTotal = 0;
 }
 void resetar(){
   myStepperAltura.step(-stepAlturaTotal);
-  myStepperAngulo.step(-stepAnguloTotal);
+  myStepperAngulo.step(stepAnguloTotal);
   anguloReferenciaDouble = 0;
   stepAnguloTotal= 0;
   byte anguloInfo[2];
@@ -80,11 +81,13 @@ int mapear(){
     distanciaMap = ultrassom.Ranging(CM);
     vetorDistanciaIda[i] = distanciaMap;
     myStepperAngulo.step(-8);
+    delay(50);
   }
-  for(int i = 0;i<128;i++){
+  for(int i = 127;i>=0;i--){
     distanciaMap = ultrassom.Ranging(CM);
     vetorDistanciaVolta[i] = distanciaMap;
     myStepperAngulo.step(8);
+    delay(50);
   }
   for(int i = 0;i<128;i++){
     media = (vetorDistanciaVolta[i] + vetorDistanciaIda[i])/2;
@@ -93,6 +96,7 @@ int mapear(){
       menorIndice = i;
     }
   }
+  menorDistanciaBuscar = menorDistancia;
   return menorIndice*8;
 }
 //670
@@ -193,7 +197,7 @@ void loop() {
     }
     else{
       myStepperAngulo.step(-16);
-      stepAnguloTotal = stepAnguloTotal - 16; 
+      stepAnguloTotal = stepAnguloTotal + 16; 
       anguloReferenciaDouble = anguloReferenciaDouble + 2.8125;
       anguloManual[0] = 0;
       anguloManual[1] = (int)anguloReferenciaDouble;
@@ -220,7 +224,7 @@ void loop() {
       anguloInfo[0] = 0;
       int contador = 0;
       myStepperAngulo.step(-stepAnguloInt); 
-      stepAnguloTotal = stepAnguloTotal - stepAnguloInt;
+      stepAnguloTotal = stepAnguloTotal + stepAnguloInt;
       //Serial.print(stepAngulo);
      
       anguloReferenciaDouble = anguloReferenciaDouble + entrada[1];
@@ -239,7 +243,7 @@ void loop() {
       int contador = 0;
       myStepperAngulo.step(stepAnguloInt); 
       //Serial.print(stepAngulo);
-      stepAnguloTotal = stepAnguloTotal + stepAnguloInt;
+      stepAnguloTotal = stepAnguloTotal - stepAnguloInt;
       //Serial.print(stepAngulo);
      
       anguloReferenciaDouble = anguloReferenciaDouble - entrada[1];
@@ -349,7 +353,14 @@ void loop() {
       }
       if(entrada[1]==2){
         myStepperAngulo.step(-mapear());
-        buscar();
+        digitalWrite(2,HIGH);
+        delay(500);
+        int stepAlturaInt = stepDistancia*menorDistanciaBuscar;
+        myStepperAltura.step(stepAlturaInt); 
+        delay(1000);
+        myStepperAltura.step(-stepAlturaInt); 
+       // buscar();
+        digitalWrite(2,LOW);
       }
       
     }

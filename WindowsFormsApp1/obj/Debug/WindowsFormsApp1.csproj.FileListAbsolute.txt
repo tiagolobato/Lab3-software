@@ -10,9 +10,9 @@ C:\Users\tiago\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsF
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
-C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\tiago\Source\Repos\Lab3-software\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache

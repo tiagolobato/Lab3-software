@@ -63,9 +63,9 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap guindaste1 {
+        internal static System.Drawing.Bitmap controle__manual {
             get {
-                object obj = ResourceManager.GetObject("guindaste1", resourceCulture);
+                object obj = ResourceManager.GetObject("controle_ manual", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap guindaste2 {
+        internal static System.Drawing.Bitmap descendo_ima {
             get {
-                object obj = ResourceManager.GetObject("guindaste2", resourceCulture);
+                object obj = ResourceManager.GetObject("descendo_ima", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap guindastecrash {
+        internal static System.Drawing.Bitmap girando_antihorario {
             get {
-                object obj = ResourceManager.GetObject("guindastecrash", resourceCulture);
+                object obj = ResourceManager.GetObject("girando_antihorario", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap guindastecrash1 {
+        internal static System.Drawing.Bitmap girando_horario {
             get {
-                object obj = ResourceManager.GetObject("guindastecrash1", resourceCulture);
+                object obj = ResourceManager.GetObject("girando_horario", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap joystick {
+        internal static System.Drawing.Bitmap guindaste_desligado {
             get {
-                object obj = ResourceManager.GetObject("joystick", resourceCulture);
+                object obj = ResourceManager.GetObject("guindaste_desligado", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,19 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap joystick2 {
+        internal static System.Drawing.Bitmap guindaste_ligado {
             get {
-                object obj = ResourceManager.GetObject("joystick2", resourceCulture);
+                object obj = ResourceManager.GetObject("guindaste_ligado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap subindo_ima {
+            get {
+                object obj = ResourceManager.GetObject("subindo_ima", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
