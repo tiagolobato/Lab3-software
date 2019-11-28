@@ -54,7 +54,12 @@ void resetar(){
 }
 void buscar(){
   byte alturaInfo[2];
-  
+  byte saidaIma[2]; 
+  saidaIma[0] = 2;
+  saidaIma[1] = 0;
+  digitalWrite(2,HIGH);
+  Serial.write(saidaIma,2); 
+      
   long distanciaAuto = ultrassom.Ranging(CM);
   int stepAlturaInt = stepDistancia*distancia;
   alturaInfo[0] = 1;
@@ -81,13 +86,13 @@ int mapear(){
     distanciaMap = ultrassom.Ranging(CM);
     vetorDistanciaIda[i] = distanciaMap;
     myStepperAngulo.step(-8);
-    delay(50);
+    delay(10);
   }
   for(int i = 127;i>=0;i--){
     distanciaMap = ultrassom.Ranging(CM);
     vetorDistanciaVolta[i] = distanciaMap;
     myStepperAngulo.step(8);
-    delay(50);
+    delay(10);
   }
   for(int i = 0;i<128;i++){
     media = (vetorDistanciaVolta[i] + vetorDistanciaIda[i])/2;
@@ -97,7 +102,7 @@ int mapear(){
     }
   }
   menorDistanciaBuscar = menorDistancia;
-  return menorIndice*8;
+  return ((menorIndice+2)*8);
 }
 //670
 int contador2 = 0;
@@ -152,7 +157,7 @@ void loop() {
     
   }
   if(controleManual==2){
-    if(stepAnguloTotal - 16 <0 ){
+    if(stepAnguloTotal - 16 <-1024 ){
       controleManual = 0;
       anguloManual[0] = 6;
       anguloManual[1] = 0;
@@ -163,8 +168,15 @@ void loop() {
       myStepperAngulo.step(16);
       stepAnguloTotal = stepAnguloTotal - 16; 
       anguloReferenciaDouble = anguloReferenciaDouble - 2.8125;
-      anguloManual[0] = 0;
-      anguloManual[1] = (int)anguloReferenciaDouble;
+      if(anguloReferenciaDouble<0){
+        anguloManual[0] = 4;
+        anguloManual[1] = -(int)anguloReferenciaDouble;
+      }
+      else{
+        anguloManual[0] = 0;
+        anguloManual[1] = (int)anguloReferenciaDouble;
+      }
+      
       Serial.write(anguloManual,2);
       delay(100);
     }
@@ -199,8 +211,14 @@ void loop() {
       myStepperAngulo.step(-16);
       stepAnguloTotal = stepAnguloTotal + 16; 
       anguloReferenciaDouble = anguloReferenciaDouble + 2.8125;
-      anguloManual[0] = 0;
-      anguloManual[1] = (int)anguloReferenciaDouble;
+      if(anguloReferenciaDouble<0){
+        anguloManual[0] = 4;
+        anguloManual[1] = -(int)anguloReferenciaDouble;
+      }
+      else{
+        anguloManual[0] = 0;
+        anguloManual[1] = (int)anguloReferenciaDouble;
+      }
       Serial.write(anguloManual,2);
       delay(100);
     }
@@ -221,7 +239,7 @@ void loop() {
       double stepAngulo = dStep*1024;
       int stepAnguloInt = stepAngulo;
       byte anguloInfo[2];
-      anguloInfo[0] = 0;
+      
       int contador = 0;
       myStepperAngulo.step(-stepAnguloInt); 
       stepAnguloTotal = stepAnguloTotal + stepAnguloInt;
@@ -229,7 +247,14 @@ void loop() {
      
       anguloReferenciaDouble = anguloReferenciaDouble + entrada[1];
   
-      anguloInfo[1] = anguloReferenciaDouble;
+      if(anguloReferenciaDouble<0){
+        anguloInfo[0] = 4;
+        anguloInfo[1] = -anguloReferenciaDouble;
+      }
+      else{
+        anguloInfo[0] = 0;
+        anguloInfo[1] = anguloReferenciaDouble;
+      }
       Serial.write(anguloInfo,2);
       
     }
@@ -239,7 +264,6 @@ void loop() {
       double stepAngulo = dStep*1024;
       int stepAnguloInt = stepAngulo;
       byte anguloInfo[2];
-      anguloInfo[0] = 4;
       int contador = 0;
       myStepperAngulo.step(stepAnguloInt); 
       //Serial.print(stepAngulo);
@@ -247,8 +271,15 @@ void loop() {
       //Serial.print(stepAngulo);
      
       anguloReferenciaDouble = anguloReferenciaDouble - entrada[1];
-
-      anguloInfo[1] = anguloReferenciaDouble;
+      if(anguloReferenciaDouble<0){
+        anguloInfo[0] = 4;
+        anguloInfo[1] = -anguloReferenciaDouble;
+      }
+      else{
+        anguloInfo[0] = 0;
+        anguloInfo[1] = anguloReferenciaDouble;
+      }
+      
       Serial.write(anguloInfo,2);
     } 
 //Fim - Motor Angulo
@@ -352,15 +383,20 @@ void loop() {
         buscar();
       }
       if(entrada[1]==2){
-        myStepperAngulo.step(-mapear());
-        digitalWrite(2,HIGH);
+        int stepsMapear = mapear();
+        myStepperAngulo.step(-stepsMapear);
         delay(500);
-        int stepAlturaInt = stepDistancia*menorDistanciaBuscar;
+        byte saidaIma[2]; 
+        saidaIma[0] = 2;
+        saidaIma[1] = 0;
+        digitalWrite(2,HIGH);
+        Serial.write(saidaIma,2);
+        int stepAlturaInt = (stepDistancia-30)*menorDistanciaBuscar;
         myStepperAltura.step(stepAlturaInt); 
         delay(1000);
         myStepperAltura.step(-stepAlturaInt); 
+        myStepperAngulo.step(stepsMapear);
        // buscar();
-        digitalWrite(2,LOW);
       }
       
     }

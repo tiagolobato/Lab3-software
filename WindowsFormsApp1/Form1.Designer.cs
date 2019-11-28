@@ -149,27 +149,27 @@
             this.lblAlturaInfoFixo.AutoSize = true;
             this.lblAlturaInfoFixo.Location = new System.Drawing.Point(44, 71);
             this.lblAlturaInfoFixo.Name = "lblAlturaInfoFixo";
-            this.lblAlturaInfoFixo.Size = new System.Drawing.Size(45, 17);
+            this.lblAlturaInfoFixo.Size = new System.Drawing.Size(77, 17);
             this.lblAlturaInfoFixo.TabIndex = 7;
-            this.lblAlturaInfoFixo.Text = "Altura";
+            this.lblAlturaInfoFixo.Text = "Altura (cm)";
             // 
             // lblAnguloInfoFixo
             // 
             this.lblAnguloInfoFixo.AutoSize = true;
             this.lblAnguloInfoFixo.Location = new System.Drawing.Point(149, 71);
             this.lblAnguloInfoFixo.Name = "lblAnguloInfoFixo";
-            this.lblAnguloInfoFixo.Size = new System.Drawing.Size(52, 17);
+            this.lblAnguloInfoFixo.Size = new System.Drawing.Size(75, 17);
             this.lblAnguloInfoFixo.TabIndex = 9;
-            this.lblAnguloInfoFixo.Text = "Ângulo";
+            this.lblAnguloInfoFixo.Text = "Ângulo ( º)";
             // 
             // lblDistanciaInfoFixo
             // 
             this.lblDistanciaInfoFixo.AutoSize = true;
             this.lblDistanciaInfoFixo.Location = new System.Drawing.Point(244, 71);
             this.lblDistanciaInfoFixo.Name = "lblDistanciaInfoFixo";
-            this.lblDistanciaInfoFixo.Size = new System.Drawing.Size(66, 17);
+            this.lblDistanciaInfoFixo.Size = new System.Drawing.Size(98, 17);
             this.lblDistanciaInfoFixo.TabIndex = 11;
-            this.lblDistanciaInfoFixo.Text = "Distância";
+            this.lblDistanciaInfoFixo.Text = "Distância (cm)";
             // 
             // textBoxDistancia
             // 
@@ -499,6 +499,7 @@
             this.pictureBoxGuindaste.Size = new System.Drawing.Size(507, 461);
             this.pictureBoxGuindaste.TabIndex = 29;
             this.pictureBoxGuindaste.TabStop = false;
+            this.pictureBoxGuindaste.Click += new System.EventHandler(this.pictureBoxGuindaste_Click);
             // 
             // pictureBox20
             // 

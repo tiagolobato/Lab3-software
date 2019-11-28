@@ -180,7 +180,7 @@ namespace WindowsFormsApp1
                 MessageBoxDefaultButton.Button1);
                 return;
             }
-            if(anguloReferencia + anguloInt > 180 || anguloReferencia + anguloInt < 0)
+            if(anguloReferencia + anguloInt > 180 || anguloReferencia + anguloInt < -180)
             {
                 MessageBox.Show("Angulo fora do limite",
                 "Erro",
@@ -250,7 +250,7 @@ namespace WindowsFormsApp1
             }
             if (saida[0] == 4)
             {
-                this.Invoke(new EventHandler(atualizarTextBoxAngulo));
+                this.Invoke(new EventHandler(atualizarTextBoxAnguloNegativo));
             }
             if (saida[0] == 5)
             {
@@ -368,6 +368,19 @@ namespace WindowsFormsApp1
             anguloReferencia = Int32.Parse(s);
             textBoxAngulo.Text = anguloReferencia.ToString();
             if(sinalControleManual == 0)
+            {
+                pictureBoxGuindaste.Image = Properties.Resources.guindaste_ligado;
+            }
+            else
+            {
+                pictureBoxGuindaste.Image = Properties.Resources.controle__manual;
+            }
+        }
+        private void atualizarTextBoxAnguloNegativo(object sender, EventArgs e)
+        {
+            anguloReferencia = -(Int32.Parse(s));
+            textBoxAngulo.Text = anguloReferencia.ToString();
+            if (sinalControleManual == 0)
             {
                 pictureBoxGuindaste.Image = Properties.Resources.guindaste_ligado;
             }
@@ -807,6 +820,11 @@ namespace WindowsFormsApp1
                 MessageBoxDefaultButton.Button1);
                 return;
             }
+        }
+
+        private void pictureBoxGuindaste_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
